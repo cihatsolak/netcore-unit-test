@@ -8,16 +8,21 @@ namespace XUnitTest.Test.App
     /// </summary>
     public class VehicleTest
     {
+        public Vehicle Vehicle { get; set; }
+        public VehicleTest()
+        {
+            Vehicle = new Vehicle();
+        }
+
         [Fact]
         public void CalculateConsumptionByDistanceTestFact()
         {
             //Arrage Evresi
             int distance = 5;
             int fuelPrice = 20;
-            var vehicle = new Vehicle();
 
             //Act Evresi
-            int consumption = vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
+            int consumption = Vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
 
             //Assert ->  Assert.Equal(beklenen değer, gerçek değer);
             Assert.Equal(20, consumption);
@@ -28,10 +33,9 @@ namespace XUnitTest.Test.App
         public void CalculateConsumptionByDistanceTestTheory(int distance, int fuelPrice)
         {
             //Arrage Evresi
-            var vehicle = new Vehicle();
 
             //Act Evresi
-            int consumption = vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
+            int consumption = Vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
 
             //Assert ->  Assert.Equal(beklenen değer, gerçek değer);
             Assert.Equal<int>(20, consumption);
