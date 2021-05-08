@@ -118,5 +118,17 @@ namespace XUnitTest.Test.App
             Assert.IsAssignableFrom<IEnumerable<string>>(new List<string>());
             Assert.IsAssignableFrom<object>(2015);
         }
+
+        /// <summary>
+        /// Null / NotNull
+        /// </summary>
+        [Fact]
+        public void NullOrNotNull()
+        {
+            List<string> models = SampleMethod.GetModels();
+
+            Assert.NotNull(models);
+            Assert.Null(null);
+        }
     }
 }
