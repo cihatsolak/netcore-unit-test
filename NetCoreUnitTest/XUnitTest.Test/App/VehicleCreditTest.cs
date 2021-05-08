@@ -58,7 +58,8 @@ namespace XUnitTest.Test.App
             int installmentsCount = VehicleCredit.Installment(model, modelYear, fuel);
 
             //Servisten dönen değeri 2'ye böldüğü için beklenen değeri 5 verdim.
-            Assert.Equal<int>(5, installmentsCount);
+            Assert.Equal<int>(5, installmentsCount); //(xUnit ile doğrula)
+            CreditServiceMock.Verify(p => p.CalculateInstallments(model, modelYear, fuel), Times.Once); //Bu metot 1 kere çalışsın. Eğer 2 kere çalışırsa test başarısız olacak.
         }
     }
 }
