@@ -46,7 +46,11 @@ namespace XUnitTest.Test.App
         [Fact]
         public void MatchOrDoesNotMatch()
         {
+            var assert = new Asserts();
+            string brand = assert.GetBrand();
 
+            Assert.Matches("^Volk", brand);
+            Assert.DoesNotMatch("dog$", brand);
         }
     }
 }
