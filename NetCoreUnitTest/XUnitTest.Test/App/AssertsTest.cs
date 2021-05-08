@@ -95,5 +95,18 @@ namespace XUnitTest.Test.App
 
             Assert.Single(models);
         }
+
+        /// <summary>
+        /// IsType / IsNotType
+        /// </summary>
+        [Fact]
+        public void IsTypeOrIsNotType()
+        {
+            Assert.IsType<int>(1);
+            Assert.IsType<string>("cihat");
+
+            Assert.IsNotType<int>("cihat");
+            Assert.IsNotType<float>(2);
+        }
     }
 }
