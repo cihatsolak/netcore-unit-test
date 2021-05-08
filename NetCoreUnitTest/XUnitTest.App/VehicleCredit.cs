@@ -14,7 +14,7 @@ namespace XUnitTest.App
             _creditService = creditService;
         }
 
-        public int Calculate(string brand, int modelYear)
+        public int CreditAmount(string brand, int modelYear)
         {
             if (string.IsNullOrEmpty(brand))
                 throw new ArgumentNullException(nameof(brand), "brand cannot be empty");
@@ -25,6 +25,12 @@ namespace XUnitTest.App
             int creditAmount = _creditService.GetVehicleCreditAmount(brand, modelYear);
 
             return creditAmount + 100;
+        }
+
+        public int Installment(string model, int modelYear, string fuel)
+        {
+            int installment = _creditService.CalculateInstallments(model, modelYear, fuel);
+            return installment / 2;
         }
     }
 }

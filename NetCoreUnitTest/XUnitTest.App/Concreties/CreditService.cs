@@ -30,7 +30,7 @@ namespace XUnitTest.App.Concreties
         public int CalculateInstallments(string model, int modelYear, string fuel)
         {
             if (model.Equals("Polo") && modelYear == 2021 && fuel.Equals("Benzin"))
-                return 5;
+                return 10;
             else if (model.Equals("Octavia") && modelYear == 2015 && fuel.Equals("Dizel"))
                 return 8;
             else

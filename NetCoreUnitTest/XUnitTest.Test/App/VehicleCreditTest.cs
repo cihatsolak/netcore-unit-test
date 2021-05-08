@@ -20,7 +20,7 @@ namespace XUnitTest.Test.App
         }
 
         /// <summary>
-        /// Araç kredi tutarını belirlediğim değerlerle test ediyorum
+        /// Araç bilgilerine göre kredi tutarını hesaplayayan metotu test ediyorum
         /// </summary>
         /// <param name="brand">Marka</param>
         /// <param name="modelYear">Model Yıl</param>
@@ -33,12 +33,32 @@ namespace XUnitTest.Test.App
             //Eğer ICreditService içerisinde GetVehicleCreditAmount metotu çağrılırsa return olarak expectedCreditAmount değerini dön.
             CreditServiceMock.Setup(p => p.GetVehicleCreditAmount(brand, modelYear)).Returns(expectedCreditAmount);
 
-            int creditAmount = VehicleCredit.Calculate(brand, modelYear);
+            int creditAmount = VehicleCredit.CreditAmount(brand, modelYear);
 
             //GetVehicleCreditAmount servisinden 200 dönecek(Mock), Calculate buna 100 ekleyecek ve gelen değer 300 olacak.
             //Seat için 185 + 100 = 285 dönecek
             //Volkswagen için 200 + 100 = 300 dönecek
             Assert.InRange(creditAmount, 280, 310);
+        }
+
+        /// <summary>
+        /// Araç bilgilerine göre kredinin kaç taksit olacağını hesaplayan metotu test ediyorum.
+        /// </summary>
+        /// <param name="model">Model</param>
+        /// <param name="modelYear">Model Yılı</param>
+        /// <param name="fuel">Yakıt Tipi</param>
+        [Theory]
+        [InlineData("Polo", 2021, "Benzin")]
+        public void Installment_VehicleValues_ReturnNumberOfCreditInstallments(string model, int modelYear, string fuel)
+        {
+            //Eğer ICreditService içerisinde CalculateInstallments metotu çağrılırsa return olarak 10 değerini dön.
+            CreditServiceMock.Setup(p => p.CalculateInstallments(model, modelYear, fuel)).Returns(10);
+
+            //VehicleCredit.Installment metotu servisten dönen değeri 2'ye bölüyor.
+            int installmentsCount = VehicleCredit.Installment(model, modelYear, fuel);
+
+            //Servisten dönen değeri 2'ye böldüğü için beklenen değeri 5 verdim.
+            Assert.Equal<int>(5, installmentsCount);
         }
     }
 }
