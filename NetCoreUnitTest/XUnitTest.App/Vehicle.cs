@@ -13,6 +13,11 @@
         /// <returns></returns>
         public int CalculateConsumptionByDistance(int distance, int fuelPrice)
         {
+            if (distance == 0 || fuelPrice == 0)
+            {
+                return 0;
+            }
+
             return (distance * fuelPrice) / 5;
         }
     }
