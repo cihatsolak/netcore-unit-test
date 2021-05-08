@@ -16,5 +16,10 @@ namespace XUnitTest.App
         {
             return new List<string> { "Polo", "Golf", "Passat" };
         }
+
+        public int GetVehicleYear()
+        {
+            return 2015;
+        }
     }
 }

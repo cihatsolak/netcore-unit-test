@@ -73,9 +73,22 @@ namespace XUnitTest.Test.App
         {
             var assert = new Asserts();
             List<string> models = assert.GetModels();
-           
+
             Assert.NotEmpty(models);
             Assert.Empty(new List<int>());
+        }
+
+        /// <summary>
+        /// Range / NotInRange
+        /// </summary>
+        [Fact]
+        public void RangeOrNotInRange()
+        {
+            var assert = new Asserts();
+            int year = assert.GetVehicleYear();
+
+            Assert.InRange(year, 2000, 2021);
+            Assert.NotInRange(year, 1995, 1999);
         }
     }
 }
