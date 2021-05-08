@@ -16,9 +16,8 @@ namespace XUnitTest.Test.App
         [Fact]
         public void ContainOrDoesNotContains()
         {
-            var assert = new Asserts();
-            string brand = assert.GetBrand();
-            List<string> models = assert.GetModels();
+            string brand = SampleMethod.GetBrand();
+            List<string> models = SampleMethod.GetModels();
 
             Assert.Contains("agen", brand);
             Assert.DoesNotContain("skoda", brand);
@@ -32,8 +31,7 @@ namespace XUnitTest.Test.App
         [Fact]
         public void TrueOrFalse()
         {
-            var assert = new Asserts();
-            string brand = assert.GetBrand();
+            string brand = SampleMethod.GetBrand();
 
             Assert.True(brand.GetType() == typeof(string));
             Assert.False(brand.GetType() == typeof(int));
@@ -45,8 +43,7 @@ namespace XUnitTest.Test.App
         [Fact]
         public void MatchOrDoesNotMatch()
         {
-            var assert = new Asserts();
-            string brand = assert.GetBrand();
+            string brand = SampleMethod.GetBrand();
 
             Assert.Matches("^Volk", brand);
             Assert.DoesNotMatch("dog$", brand);
@@ -58,8 +55,7 @@ namespace XUnitTest.Test.App
         [Fact]
         public void StartWithOrEndWith()
         {
-            var assert = new Asserts();
-            string brand = assert.GetBrand();
+            string brand = SampleMethod.GetBrand();
 
             Assert.StartsWith("Volks", brand);
             Assert.EndsWith("agen", brand);
@@ -71,8 +67,7 @@ namespace XUnitTest.Test.App
         [Fact]
         public void EmptyOrNotEmpty()
         {
-            var assert = new Asserts();
-            List<string> models = assert.GetModels();
+            List<string> models = SampleMethod.GetModels();
 
             Assert.NotEmpty(models);
             Assert.Empty(new List<int>());
@@ -84,11 +79,21 @@ namespace XUnitTest.Test.App
         [Fact]
         public void RangeOrNotInRange()
         {
-            var assert = new Asserts();
-            int year = assert.GetVehicleYear();
+            int year = SampleMethod.GetVehicleYear();
 
             Assert.InRange(year, 2000, 2021);
             Assert.NotInRange(year, 1995, 1999);
+        }
+
+        /// <summary>
+        /// Single
+        /// </summary>
+        [Fact]
+        public void Single()
+        {
+            List<string> models = SampleMethod.GetModels();
+
+            Assert.Single(models);
         }
     }
 }

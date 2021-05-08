@@ -5,19 +5,19 @@ namespace XUnitTest.App
     /// <summary>
     /// Asserts Metotlarını test etmek amacıyla oluşturulmuş örnek metotlar
     /// </summary>
-    public class Asserts
+    public class SampleMethod
     {
-        public string GetBrand()
+        public static string GetBrand()
         {
             return "Volkswagen";
         }
 
-        public List<string> GetModels()
+        public static List<string> GetModels()
         {
-            return new List<string> { "Polo", "Golf", "Passat" };
+            return new List<string> { "Polo", "Golf", "Passat", "Passat" };
         }
 
-        public int GetVehicleYear()
+        public static int GetVehicleYear()
         {
             return 2015;
         }
