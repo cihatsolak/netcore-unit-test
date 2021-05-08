@@ -108,5 +108,15 @@ namespace XUnitTest.Test.App
             Assert.IsNotType<int>("cihat");
             Assert.IsNotType<float>(2);
         }
+
+        /// <summary>
+        /// IsAssignableFrom
+        /// </summary>
+        [Fact]
+        public void IsAssignableFrom()
+        {
+            Assert.IsAssignableFrom<IEnumerable<string>>(new List<string>());
+            Assert.IsAssignableFrom<object>(2015);
+        }
     }
 }
