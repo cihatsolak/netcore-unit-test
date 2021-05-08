@@ -130,5 +130,17 @@ namespace XUnitTest.Test.App
             Assert.NotNull(models);
             Assert.Null(null);
         }
+
+        /// <summary>
+        /// Equal / NotEqual
+        /// </summary>
+        [Fact]
+        public void EqualOrNotEqual()
+        {
+            string brand = SampleMethod.GetBrand();
+
+            Assert.Equal("Volkswagen", brand);
+            Assert.NotEqual("Scoda", brand);
+        }
     }
 }
