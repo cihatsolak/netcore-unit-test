@@ -1,5 +1,4 @@
-﻿using System;
-using XUnitTest.App.Interfaces;
+﻿using XUnitTest.App.Interfaces;
 
 namespace XUnitTest.App
 {
@@ -16,12 +15,6 @@ namespace XUnitTest.App
 
         public int CreditAmount(string brand, int modelYear)
         {
-            if (string.IsNullOrEmpty(brand))
-                throw new ArgumentNullException(nameof(brand), "brand cannot be empty");
-
-            if (0 >= modelYear)
-                throw new ArgumentException("model year cannot be less than zero", nameof(modelYear));
-
             int creditAmount = _creditService.GetVehicleCreditAmount(brand, modelYear);
 
             return creditAmount + 100;

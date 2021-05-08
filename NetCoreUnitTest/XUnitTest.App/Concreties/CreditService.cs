@@ -1,4 +1,5 @@
-﻿using XUnitTest.App.Interfaces;
+﻿using System;
+using XUnitTest.App.Interfaces;
 
 namespace XUnitTest.App.Concreties
 {
@@ -12,6 +13,12 @@ namespace XUnitTest.App.Concreties
         /// <returns>Kredi tutarı</returns>
         public int GetVehicleCreditAmount(string brand, int modelYear)
         {
+            if (string.IsNullOrEmpty(brand))
+                throw new ArgumentNullException(nameof(brand), "brand cannot be empty");
+
+            if (0 >= modelYear)
+                throw new ArgumentNullException(nameof(modelYear), "model year cannot be less than zero");
+
             if (brand.Equals("Volkswagen") && modelYear == 2021)
                 return 200;
             else if (brand.Equals("Seat") && modelYear == 2020)

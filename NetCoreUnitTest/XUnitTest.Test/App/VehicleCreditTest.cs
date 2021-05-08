@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System;
 using Xunit;
 using XUnitTest.App;
 using XUnitTest.App.Interfaces;
@@ -60,6 +61,26 @@ namespace XUnitTest.Test.App
             //Servisten dönen değeri 2'ye böldüğü için beklenen değeri 5 verdim.
             Assert.Equal<int>(5, installmentsCount); //(xUnit ile doğrula)
             CreditServiceMock.Verify(p => p.CalculateInstallments(model, modelYear, fuel), Times.Once); //Bu metot 1 kere çalışsın. Eğer 2 kere çalışırsa test başarısız olacak.
+        }
+
+        /// <summary>
+        /// Araç bilgilerine göre kredi tutarını hesaplayayan metotu test ediyorum
+        /// </summary>
+        /// <param name="brand">Marka</param>
+        /// <param name="modelYear">Model Yıl</param>
+        /// <param name="expectedCreditAmount">Beklenen kredi tutarı</param>
+        [Theory]
+        [InlineData("Seat", 0)]
+        [InlineData("Volkswagen Ticari", 0)]
+        public void CreditAmount_ZeroModelYearValue_ReturnArgumentNullException(string brand, int modelYear)
+        {
+            //Eğer ICreditService içerisinde GetVehicleCreditAmount metotu çağrılırsa ve model yılı 0 ve altında ise return olarak ArgumentNullException fırlat.
+            CreditServiceMock.Setup(p => p.GetVehicleCreditAmount(brand, modelYear)).Throws(new ArgumentNullException(nameof(modelYear), "model year cannot be less than zero"));
+
+            //GetVehicleCreditAmount servisine model yılı 0 ve altında bir değer girildiğinde ArgumentNullException fırlatılacak.
+            var argumentNullException = Assert.Throws<ArgumentNullException>(() => VehicleCredit.CreditAmount(brand, modelYear));
+            //Dönen hata mesajı doğru mu?
+            Assert.Equal("model year cannot be less than zero (Parameter 'modelYear')", argumentNullException.Message);
         }
     }
 }
