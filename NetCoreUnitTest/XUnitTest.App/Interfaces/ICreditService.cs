@@ -12,5 +12,14 @@
         /// <param name="modelYear">Model yılı</param>
         /// <returns>Kredi tutarı</returns>
         int GetVehicleCreditAmount(string brand, int modelYear);
+
+        /// <summary>
+        /// Model, yıl ve yakıt tipine göre kaç taksit olacağını hesaplar
+        /// </summary>
+        /// <param name="model">Model</param>
+        /// <param name="modelYear">Model yılı</param>
+        /// <param name="fuel">Yakıt tipi</param>
+        /// <returns>Taksit sayısı</returns>
+        int CalculateInstallments(string model, int modelYear, string fuel);
     }
 }

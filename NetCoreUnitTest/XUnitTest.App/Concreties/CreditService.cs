@@ -19,5 +19,22 @@ namespace XUnitTest.App.Concreties
             else
                 return 150;
         }
+
+        /// <summary>
+        /// Model, yıl ve yakıt tipine göre kaç taksit olacağını hesaplar
+        /// </summary>
+        /// <param name="model">Model</param>
+        /// <param name="modelYear">Model yılı</param>
+        /// <param name="fuel">Yakıt tipi</param>
+        /// <returns>Taksit sayısı</returns>
+        public int CalculateInstallments(string model, int modelYear, string fuel)
+        {
+            if (model.Equals("Polo") && modelYear == 2021 && fuel.Equals("Benzin"))
+                return 5;
+            else if (model.Equals("Octavia") && modelYear == 2015 && fuel.Equals("Dizel"))
+                return 8;
+            else
+                return 12;
+        }
     }
 }

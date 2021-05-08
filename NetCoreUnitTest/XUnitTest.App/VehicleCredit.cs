@@ -22,7 +22,9 @@ namespace XUnitTest.App
             if (0 >= modelYear)
                 throw new ArgumentException("model year cannot be less than zero", nameof(modelYear));
 
-            return _creditService.GetVehicleCreditAmount(brand, modelYear);
+            int creditAmount = _creditService.GetVehicleCreditAmount(brand, modelYear);
+
+            return creditAmount + 100;
         }
     }
 }
