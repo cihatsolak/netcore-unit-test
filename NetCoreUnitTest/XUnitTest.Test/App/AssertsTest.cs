@@ -6,7 +6,7 @@ using XUnitTest.App;
 namespace XUnitTest.Test.App
 {
     /// <summary>
-    /// Asserts Metotlarını test etmek 
+    /// Asserts metotlarını test etmek 
     /// </summary>
     public class AssertsTest
     {
@@ -17,7 +17,6 @@ namespace XUnitTest.Test.App
         public void ContainOrDoesNotContains()
         {
             var assert = new Asserts();
-
             string brand = assert.GetBrand();
             List<string> models = assert.GetModels();
 
@@ -64,6 +63,19 @@ namespace XUnitTest.Test.App
 
             Assert.StartsWith("Volks", brand);
             Assert.EndsWith("agen", brand);
+        }
+
+        /// <summary>
+        /// Empty / NotEmpty
+        /// </summary>
+        [Fact]
+        public void EmptyOrNotEmpty()
+        {
+            var assert = new Asserts();
+            List<string> models = assert.GetModels();
+           
+            Assert.NotEmpty(models);
+            Assert.Empty(new List<int>());
         }
     }
 }
