@@ -52,5 +52,18 @@ namespace XUnitTest.Test.App
             Assert.Matches("^Volk", brand);
             Assert.DoesNotMatch("dog$", brand);
         }
+
+        /// <summary>
+        /// StartWith / EndWith
+        /// </summary>
+        [Fact]
+        public void StartWithOrEndWith()
+        {
+            var assert = new Asserts();
+            string brand = assert.GetBrand();
+
+            Assert.StartsWith("Volks", brand);
+            Assert.EndsWith("agen", brand);
+        }
     }
 }
