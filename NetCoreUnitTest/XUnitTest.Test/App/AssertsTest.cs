@@ -33,6 +33,19 @@ namespace XUnitTest.Test.App
         [Fact]
         public void TrueOrFalse()
         {
+            var assert = new Asserts();
+            string brand = assert.GetBrand();
+
+            Assert.True(brand.GetType() == typeof(string));
+            Assert.False(brand.GetType() == typeof(int));
+        }
+
+        /// <summary>
+        /// Match / DoesNotMatch
+        /// </summary>
+        [Fact]
+        public void MatchOrDoesNotMatch()
+        {
 
         }
     }
