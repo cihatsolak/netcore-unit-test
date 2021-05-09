@@ -30,7 +30,7 @@ namespace UnitTest.Web.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Index));
             }
 
             var product = _productRepository.GetById((int)id);
