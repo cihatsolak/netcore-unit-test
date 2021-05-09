@@ -133,7 +133,7 @@ namespace UnitTest.Web.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             var product = _productRepository.GetById((int)id);
             _productRepository.Delete(product);
