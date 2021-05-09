@@ -6,6 +6,9 @@ using XUnitTest.App.Interfaces;
 
 namespace XUnitTest.Test.App
 {
+    /// <summary>
+    /// Moq Framework ile test işlemleri
+    /// </summary>
     public class VehicleCreditTest
     {
         //VehicleCredit class'ının içerisindeli ICreditService interface'ini taklit ediyorum.
@@ -64,7 +67,7 @@ namespace XUnitTest.Test.App
         }
 
         /// <summary>
-        /// Araç bilgilerine göre kredi tutarını hesaplayayan metotu test ediyorum
+        /// Mock - Throws
         /// </summary>
         /// <param name="brand">Marka</param>
         /// <param name="modelYear">Model Yıl</param>
@@ -81,6 +84,28 @@ namespace XUnitTest.Test.App
             var argumentNullException = Assert.Throws<ArgumentNullException>(() => VehicleCredit.CreditAmount(brand, modelYear));
             //Dönen hata mesajı doğru mu?
             Assert.Equal("model year cannot be less than zero (Parameter 'modelYear')", argumentNullException.Message);
+        }
+
+        /// <summary>
+        /// Mock - Callback
+        /// </summary>
+        /// <param name="brand">Marka</param>
+        /// <param name="modelYear">Model Yıl</param>
+        /// <param name="expectedCreditAmount">Beklenen kredi tutarı</param>
+        [Theory]
+        [InlineData("Volkswagen", 2021)]
+        public void CreditAmount_BrandAndModelYearValues_ReturnCreditAmountValue(string brand, int modelYear)
+        {
+            int actualCreditAmount = 0;
+
+            //Eğer ICreditService içerisinde GetVehicleCreditAmount metotu çağrılırsa return olarak expectedCreditAmount değerini dön.
+            CreditServiceMock.Setup(p => p.GetVehicleCreditAmount(It.IsAny<string>(), It.IsAny<int>())).Callback<string, int>((x, y) => actualCreditAmount = y / 3);
+
+            VehicleCredit.CreditAmount(brand, modelYear);
+            Assert.Equal(673, actualCreditAmount);
+
+            VehicleCredit.CreditAmount("Seat", 2012);
+            Assert.Equal(670, actualCreditAmount);
         }
     }
 }
