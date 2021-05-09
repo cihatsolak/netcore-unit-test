@@ -16,7 +16,7 @@ namespace UnitTest.Web.Test.Controllers
     {
         #region Fields and Properties
         private readonly Mock<IRepository<Product>> _productRepositoryMock;
-        private readonly ProductsController _productController;
+        private readonly ProductsController _productsController;
 
         private IEnumerable<Product> Products { get; set; }
         private Product Product { get; set; }
@@ -26,7 +26,7 @@ namespace UnitTest.Web.Test.Controllers
         public ProductControllerTest()
         {
             _productRepositoryMock = new Mock<IRepository<Product>>();
-            _productController = new ProductsController(_productRepositoryMock.Object);
+            _productsController = new ProductsController(_productRepositoryMock.Object);
 
             Products = new List<Product>
             {
@@ -46,7 +46,7 @@ namespace UnitTest.Web.Test.Controllers
         [Fact]
         public void Index_ActionExecutes_ReturnView()
         {
-            IActionResult result = _productController.Index();
+            IActionResult result = _productsController.Index();
 
             Assert.IsType<ViewResult>(result);
         }
@@ -60,7 +60,7 @@ namespace UnitTest.Web.Test.Controllers
             //Veri tabanından verileri çekmek yerine mock'lama işlemi yapıyorum.
             _productRepositoryMock.Setup(p => p.GetAll()).Returns(Products);
 
-            IActionResult result = _productController.Index();
+            IActionResult result = _productsController.Index();
 
             var viewResult = Assert.IsType<ViewResult>(result); //Geriye viewResult dönüyor mu?
             var products = Assert.IsAssignableFrom<IEnumerable<Product>>(viewResult.Model); //Dönen model tipini kontrol ettim.
@@ -75,7 +75,7 @@ namespace UnitTest.Web.Test.Controllers
         [Fact]
         public void Details_IdIsNull_ReturnRedirectToIndexAction()
         {
-            IActionResult result = _productController.Details(null);
+            IActionResult result = _productsController.Details(null);
 
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result); //Geriye RedirectToActionResult mı dönüyor?
             Assert.Equal("Index", redirectToActionResult.ActionName); //Hangi action name?
@@ -91,7 +91,7 @@ namespace UnitTest.Web.Test.Controllers
             Product productNull = null;
             _productRepositoryMock.Setup(p => p.GetById(id)).Returns(productNull);
 
-            IActionResult result = _productController.Details(id);
+            IActionResult result = _productsController.Details(id);
 
             var notFoundResult = Assert.IsType<NotFoundResult>(result); //Geriye RedirectToActionResult mı dönüyor?
             Assert.Equal<int>(404, notFoundResult.StatusCode); //Status code 404 mü?
@@ -106,7 +106,7 @@ namespace UnitTest.Web.Test.Controllers
         {
             _productRepositoryMock.Setup(p => p.GetById(id)).Returns(Product);
 
-            IActionResult result = _productController.Details(id);
+            IActionResult result = _productsController.Details(id);
 
             var viewResult = Assert.IsType<ViewResult>(result); //Geriye ViewResult mı dönüyor?
             Assert.IsAssignableFrom<Product>(viewResult.Model); //View içerisinde dönen model Product mı?
@@ -118,9 +118,9 @@ namespace UnitTest.Web.Test.Controllers
         /// HTTP Get - Create Action metotunun test edilmesi
         /// </summary>
         [Fact]
-        public void Create_ActionExecutes_ReturnViewResult()
+        public void CreateGET_ActionExecutes_ReturnViewResult()
         {
-            IActionResult actionResult = _productController.Create();
+            IActionResult actionResult = _productsController.Create();
 
             var viewResult = Assert.IsType<ViewResult>(actionResult);
             Assert.Null(viewResult.Model);
@@ -130,11 +130,11 @@ namespace UnitTest.Web.Test.Controllers
         /// HTTP Post - Create Action metotuna geçersiz product modelin test edilmesi
         /// </summary>
         [Fact]
-        public void Create_InvalidModelState_ReturnViewAndProductModel()
+        public void CreatePOST_InvalidModelState_ReturnViewAndProductModel()
         {
-            _productController.ModelState.AddModelError("Name", "Name is required");
+            _productsController.ModelState.AddModelError("Name", "Name is required");
 
-            IActionResult actionResult = _productController.Create(Product);
+            IActionResult actionResult = _productsController.Create(Product);
 
             var viewResult = Assert.IsType<ViewResult>(actionResult);
             Assert.NotNull(viewResult.Model);
@@ -145,11 +145,11 @@ namespace UnitTest.Web.Test.Controllers
         /// </summary>
 
         [Fact]
-        public void Create_ValidModelState_ReturnRedirectToIndexAction()
+        public void CreatePOST_ValidModelState_ReturnRedirectToIndexAction()
         {
             _productRepositoryMock.Setup(p => p.Insert(Product));
 
-            IActionResult actionResult = _productController.Create(Product);
+            IActionResult actionResult = _productsController.Create(Product);
 
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(actionResult);
             Assert.Equal("Index", redirectToActionResult.ActionName); //Hangi action name?
@@ -159,13 +159,13 @@ namespace UnitTest.Web.Test.Controllers
         /// Http Post - Create Action metotu içindeki repository insert metotunun test edilmesi
         /// </summary>
         [Fact]
-        public void Create_ValidModelState_RepositoryInCreateMethodsExecute()
+        public void CreatePOST_ValidModelState_RepositoryInCreateMethodsExecute()
         {
             Product productEntity = null;
             //It.IsAny<Product>() : İçerisine herhangi bir product gelebilir
             _productRepositoryMock.Setup(p => p.Insert(It.IsAny<Product>())).Callback<Product>(x => productEntity = x);
 
-            IActionResult actionResult = _productController.Create(Product);
+            IActionResult actionResult = _productsController.Create(Product);
 
             //ProductRepository içerisindeki Insert metotu en az 1 kere çalıştı mı?
             _productRepositoryMock.Verify(repo => repo.Insert(It.IsAny<Product>()), Times.Once);
@@ -179,14 +179,14 @@ namespace UnitTest.Web.Test.Controllers
         /// Http Post - Create Action metotu içindeki repository insert metotunun test edilmesi
         /// </summary>
         [Fact]
-        public void Create_InValidModelState_RepositoryInCreateMethodsExecute()
+        public void CreatePOST_InValidModelState_RepositoryInCreateMethodsExecute()
         {
             //ModelState de hata olması için rastgele bir hata ekliyorum.
-            _productController.ModelState.AddModelError("Name", "Name is required");
+            _productsController.ModelState.AddModelError("Name", "Name is required");
 
             _productRepositoryMock.Setup(p => p.Insert(Product));
 
-            IActionResult actionResult = _productController.Create(Product);
+            IActionResult actionResult = _productsController.Create(Product);
 
             //ProductRepository içerisindeki Insert metotu ModelState invalid oldugu için hiç çalışmaması lazım.
             _productRepositoryMock.Verify(repo => repo.Insert(It.IsAny<Product>()), Times.Never);
@@ -196,6 +196,81 @@ namespace UnitTest.Web.Test.Controllers
             Assert.Null(viewResult.StatusCode);
         }
 
+        #endregion
+
+        #region Edit Action Test Methods
+        [Fact]
+        public void EditGET_IdNull_ReturnNotFound()
+        {
+            IActionResult actionResult = _productsController.Edit(null);
+
+            var notFoundResult = Assert.IsType<NotFoundResult>(actionResult);
+            Assert.Equal<int>(404, notFoundResult.StatusCode);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public void EditGET_IdIsNull_ReturnNotFound(int id)
+        {
+            Product product = null;
+            _productRepositoryMock.Setup(p => p.GetById(id)).Returns(product);
+
+            IActionResult actionResult = _productsController.Edit(id);
+
+            var notFoundResult = Assert.IsType<NotFoundResult>(actionResult);
+            Assert.Equal<int>(404, notFoundResult.StatusCode);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public void EditGET_ActionExecutes_ReturnViewWithProductEntity(int id)
+        {
+            _productRepositoryMock.Setup(p => p.GetById(id)).Returns(Product);
+
+            IActionResult actionResult = _productsController.Edit(id);
+
+            var viewResult = Assert.IsType<ViewResult>(actionResult);
+            var resultProduct = Assert.IsAssignableFrom<Product>(viewResult.Model);
+            Assert.Equal(Product.Id, resultProduct.Id);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        public void EditPOST_IdIsNotEqualProductId_ReturnNotFound(int id)
+        {
+            IActionResult actionResult = _productsController.Edit(id, Product);
+
+            var notFoundResult = Assert.IsType<NotFoundResult>(actionResult);
+            Assert.Equal<int>(404, notFoundResult.StatusCode);
+        }
+
+        [Theory]
+        [InlineData(4)]
+        public void EditPOST_InvalidModelState_ReturnViewWithProduct(int id)
+        {
+            //ModelState.IsValid'i geçemesin diye herhangi bir hata.
+            _productsController.ModelState.AddModelError("Name", "Herhangi bir hata.");
+
+            IActionResult actionResult = _productsController.Edit(id, Product);
+
+            var viewResult = Assert.IsType<ViewResult>(actionResult);
+            Assert.IsType<Product>(viewResult.Model);
+        }
+
+        [Theory]
+        [InlineData(4)]
+        public void EditPOST_ValidModelState_ReturnRedirectToActionIndex(int id)
+        {
+            _productRepositoryMock.Setup(p => p.Update(Product));
+
+            IActionResult actionResult = _productsController.Edit(id, Product);
+
+            //Bu istekde Update metotunun 1 kere çalışması gerek. Times.Once ile bunun kontrolünü yapıyoruz.
+            _productRepositoryMock.Verify(p => p.Update(It.IsAny<Product>()), Times.Once); 
+
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(actionResult);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
+        }
         #endregion
     }
 }
