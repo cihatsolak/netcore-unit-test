@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnitTest.Web.Models;
+using UnitTest.Web.Repositories;
 
 namespace UnitTest.Web
 {
@@ -28,6 +29,8 @@ namespace UnitTest.Web
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
+
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddControllersWithViews();
         }
