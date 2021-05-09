@@ -266,7 +266,58 @@ namespace UnitTest.Web.Test.Controllers
             IActionResult actionResult = _productsController.Edit(id, Product);
 
             //Bu istekde Update metotunun 1 kere çalışması gerek. Times.Once ile bunun kontrolünü yapıyoruz.
-            _productRepositoryMock.Verify(p => p.Update(It.IsAny<Product>()), Times.Once); 
+            _productRepositoryMock.Verify(p => p.Update(It.IsAny<Product>()), Times.Once);
+
+            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(actionResult);
+            Assert.Equal("Index", redirectToActionResult.ActionName);
+        }
+        #endregion
+
+        #region Delete Action Test Methods
+        [Fact]
+        public void DeleteGET_IdIsNull_ReturnRedirectToActionIndex()
+        {
+            IActionResult actionResult = _productsController.Delete(null);
+
+            var notFoundResult = Assert.IsType<NotFoundResult>(actionResult);
+            Assert.Equal<int>(404, notFoundResult.StatusCode);
+        }
+
+        [Theory]
+        [InlineData(4)]
+        public void DeleteGET_IdValid_ReturnNotFound(int id)
+        {
+            Product product = null;
+            _productRepositoryMock.Setup(p => p.GetById(id)).Returns(product);
+
+            IActionResult actionResult = _productsController.Delete(id);
+
+            var notFoundResult = Assert.IsType<NotFoundResult>(actionResult);
+            Assert.Equal<int>(404, notFoundResult.StatusCode);
+        }
+
+        [Theory]
+        [InlineData(4)]
+        public void DeleteGET_ActionExecute_ReturnViewProduct(int id)
+        {
+            _productRepositoryMock.Setup(p => p.GetById(id)).Returns(Product);
+
+            IActionResult actionResult = _productsController.Delete(id);
+
+            var viewResult = Assert.IsType<ViewResult>(actionResult);
+            Assert.IsAssignableFrom<Product>(viewResult.Model);
+        }
+
+        [Theory]
+        [InlineData(4)]
+        public void DeleteComfirmedPOST_ActionExecute_ReturnRedirectToActionIndex(int id)
+        {
+            _productRepositoryMock.Setup(p => p.GetById(id)).Returns(Product);
+            _productRepositoryMock.Setup(p => p.Delete(Product));
+
+            IActionResult actionResult = _productsController.DeleteConfirmed(id);
+
+            _productRepositoryMock.Verify(p => p.Delete(It.IsAny<Product>()), Times.Once); //1 kere çalışması lazım.
 
             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(actionResult);
             Assert.Equal("Index", redirectToActionResult.ActionName);
