@@ -38,7 +38,6 @@ namespace UnitTest.Web.Controllers.WebApi
         public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _product.GetByIdAsync(id);
-
             if (product == null)
             {
                 return NotFound();
