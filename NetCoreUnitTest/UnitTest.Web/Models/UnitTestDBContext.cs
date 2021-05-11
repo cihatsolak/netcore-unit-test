@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using UnitTest.Web.Models;
 
 #nullable disable
 
@@ -36,9 +37,15 @@ namespace UnitTest.Web.Models
                 entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
             });
 
+            modelBuilder.Entity<Student>().HasKey(p => p.Id);
+            modelBuilder.Entity<School>().HasKey(p => p.Id);
+            modelBuilder.Entity<School>().HasMany(p => p.Students).WithOne(p => p.School).HasForeignKey(p => p.SchoolId).OnDelete(DeleteBehavior.Cascade);
+
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        public DbSet<UnitTest.Web.Models.Student> Student { get; set; }
     }
 }
