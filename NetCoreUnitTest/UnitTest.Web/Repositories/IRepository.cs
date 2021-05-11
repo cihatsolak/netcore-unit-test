@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace UnitTest.Web.Repositories
 {
@@ -9,5 +10,11 @@ namespace UnitTest.Web.Repositories
         void Insert(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
+
+        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int id);
+        Task InsertAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task DeleteAsync(TEntity entity);
     }
 }
