@@ -22,7 +22,7 @@ namespace XUnitTest.Test.App
             Assert.Contains("agen", brand);
             Assert.DoesNotContain("skoda", brand);
 
-            Assert.Contains(models, item => item.Equals("Ateca", StringComparison.OrdinalIgnoreCase));
+            Assert.Contains(models, item => item.Equals("Golf", StringComparison.OrdinalIgnoreCase));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace XUnitTest.Test.App
         [Fact]
         public void Single()
         {
-            List<string> models = SampleMethod.GetModels();
+            List<string> models = SampleMethod.GetSingleModels();
 
             Assert.Single(models);
         }

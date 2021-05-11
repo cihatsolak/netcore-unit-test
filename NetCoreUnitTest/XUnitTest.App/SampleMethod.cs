@@ -14,7 +14,12 @@ namespace XUnitTest.App
 
         public static List<string> GetModels()
         {
-            return new List<string> { "Polo", "Golf", "Passat", "Passat" };
+            return new List<string> { "Polo", "Golf", "Passat" };
+        }
+
+        public static List<string> GetSingleModels()
+        {
+            return new List<string> { "Polo" };
         }
 
         public static int GetVehicleYear()
