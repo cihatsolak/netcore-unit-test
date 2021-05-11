@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using UnitTest.Web.Models;
 
 #nullable disable
 
@@ -17,6 +16,8 @@ namespace UnitTest.Web.Models
         }
 
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<School> Schools { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -46,6 +47,6 @@ namespace UnitTest.Web.Models
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 
-        public DbSet<UnitTest.Web.Models.Student> Student { get; set; }
+       
     }
 }

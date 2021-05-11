@@ -1,0 +1,56 @@
+﻿using Microsoft.EntityFrameworkCore;
+using UnitTest.Web.Controllers;
+using UnitTest.Web.Models;
+
+namespace UnitTest.Web.Test.Controllers.Students
+{
+    public class BaseStudentsControllerTest
+    {
+        protected DbContextOptions<UnitTestDBContext> _contextOptions { get; set; }
+        public void SetContextOptions(DbContextOptions<UnitTestDBContext> contextOptions)
+        {
+            _contextOptions = contextOptions;
+            SeedData();
+        }
+        protected UnitTestDBContext Context => new(_contextOptions);
+
+        protected StudentsController StudentsController => new(new UnitTestDBContext(_contextOptions));
+        /// <summary>
+        /// Test metotu ayaga kalktıgında seed metotu çalışacak, veriler tablolara eklenecek
+        /// </summary>
+        public void SeedData()
+        {
+            using var context = new UnitTestDBContext(_contextOptions);
+            context.Database.EnsureDeleted(); //Veri tabanını sil
+            context.Database.EnsureCreated(); //Veri tabanını sıfırdan tekrar oluştur.
+
+            context.Schools.AddRange(new School
+            {
+                Name = "Test Okul 1"
+            }, new School
+            {
+                Name = "Test Okul 2"
+            });
+
+            context.Students.AddRange(new Student
+            {
+                SchoolId = 1,
+                Name = "Ali",
+                Address = "İstanbul"
+            }, new Student
+            {
+                SchoolId = 2,
+                Name = "Ahmet",
+                Address = "İzmir"
+            }, new Student
+            {
+                SchoolId = 2,
+                Name = "Ayşe",
+                Address = "Antalya"
+            });
+
+            context.SaveChanges();
+        }
+    }
+}
+

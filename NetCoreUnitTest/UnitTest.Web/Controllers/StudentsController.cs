@@ -19,7 +19,7 @@ namespace UnitTest.Web.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            var unitTestDBContext = _context.Student.Include(s => s.School);
+            var unitTestDBContext = _context.Students.Include(s => s.School);
             return View(await unitTestDBContext.ToListAsync());
         }
 
@@ -31,7 +31,7 @@ namespace UnitTest.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
+            var student = await _context.Students
                 .Include(s => s.School)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
@@ -74,7 +74,7 @@ namespace UnitTest.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student.FindAsync(id);
+            var student = await _context.Students.FindAsync(id);
             if (student == null)
             {
                 return NotFound();
@@ -127,7 +127,7 @@ namespace UnitTest.Web.Controllers
                 return NotFound();
             }
 
-            var student = await _context.Student
+            var student = await _context.Students
                 .Include(s => s.School)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
@@ -143,15 +143,15 @@ namespace UnitTest.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var student = await _context.Student.FindAsync(id);
-            _context.Student.Remove(student);
+            var student = await _context.Students.FindAsync(id);
+            _context.Students.Remove(student);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool StudentExists(int id)
         {
-            return _context.Student.Any(e => e.Id == id);
+            return _context.Students.Any(e => e.Id == id);
         }
     }
 }
