@@ -8,7 +8,15 @@ namespace UnitTest.Web.Test.Controllers.Students
     {
         #region Fields and Properties
         protected DbContextOptions<UnitTestDBContext> _contextOptions { get; set; }
+
+        /// <summary>
+        /// Her istekte yeni bir context oluşturur. Insert,Update,Delete işlemleri için kullanılmamalıdır.
+        /// </summary>
         protected UnitTestDBContext Context => new(_contextOptions);
+
+        /// <summary>
+        /// Her istekte yeni bir context oluşturur. Insert,Update,Delete işlemleri için kullanılmamalıdır.
+        /// </summary>
         protected StudentsController StudentsController => new(new UnitTestDBContext(_contextOptions));
         #endregion
 
