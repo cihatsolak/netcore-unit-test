@@ -7,6 +7,9 @@ using Xunit;
 
 namespace UnitTest.Web.Test.Controllers.Students
 {
+    /// <summary>
+    /// Base Class'dan Context ve StudentController property'leri kullanılmaktadır.
+    /// </summary>
     public class StudentsControllerTestWithInMemory : BaseStudentsControllerTest
     {
         public StudentsControllerTestWithInMemory()
@@ -17,6 +20,10 @@ namespace UnitTest.Web.Test.Controllers.Students
             SetContextOptions(dbContextOptionsBuilder.Options);
         }
 
+        /// <summary>
+        /// EF Core InMemory ile öğrenci ekleme ve test etme
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task CreatePOST_ValidModelState_ReturnRedirectIndexActionAndInsertStudents()
         {
@@ -39,8 +46,5 @@ namespace UnitTest.Web.Test.Controllers.Students
             Assert.NotNull(studentDbEntity);
             Assert.Equal<int>(student.Id, studentDbEntity.Id);
         }
-
-
-
     }
 }

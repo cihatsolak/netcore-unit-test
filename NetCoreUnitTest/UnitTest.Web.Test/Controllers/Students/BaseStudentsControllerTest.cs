@@ -6,15 +6,21 @@ namespace UnitTest.Web.Test.Controllers.Students
 {
     public class BaseStudentsControllerTest
     {
+        #region Fields and Properties
         protected DbContextOptions<UnitTestDBContext> _contextOptions { get; set; }
+        protected UnitTestDBContext Context => new(_contextOptions);
+        protected StudentsController StudentsController => new(new UnitTestDBContext(_contextOptions));
+        #endregion
+
+        #region Ctor
         public void SetContextOptions(DbContextOptions<UnitTestDBContext> contextOptions)
         {
             _contextOptions = contextOptions;
             SeedData();
         }
-        protected UnitTestDBContext Context => new(_contextOptions);
+        #endregion
 
-        protected StudentsController StudentsController => new(new UnitTestDBContext(_contextOptions));
+
         /// <summary>
         /// Test metotu ayaga kalktıgında seed metotu çalışacak, veriler tablolara eklenecek
         /// </summary>
