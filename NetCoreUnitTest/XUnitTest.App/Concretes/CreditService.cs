@@ -1,7 +1,7 @@
 ﻿using System;
 using XUnitTest.App.Interfaces;
 
-namespace XUnitTest.App.Concreties
+namespace XUnitTest.App.Concretes
 {
     public class CreditService : ICreditService
     {
