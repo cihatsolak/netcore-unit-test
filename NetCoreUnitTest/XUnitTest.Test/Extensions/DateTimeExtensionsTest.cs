@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using Xunit;
 using XUnitTest.App.Extensions;
+using XUnitTest.Test.Poco;
 
 namespace XUnitTest.Test.Extensions
 {
@@ -16,5 +19,6 @@ namespace XUnitTest.Test.Extensions
             const string expected = "culture";
             Assert.Equal(expected, actual);
         }
+        
     }
 }
