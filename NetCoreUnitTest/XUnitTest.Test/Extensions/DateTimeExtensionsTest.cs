@@ -19,6 +19,13 @@ namespace XUnitTest.Test.Extensions
             const string expected = "culture";
             Assert.Equal(expected, actual);
         }
-        
+
+        [Theory, ClassData(typeof(CultureTestTheoryData))]
+        public void ToPrettyDate_ShouldAssertsTrue_WhenCultureIsDefined(CultureTestParameter parameter)
+        {
+            var actual = parameter.Actual.ToPrettyDate(parameter.Culture);
+            var expected = parameter.Expected;
+            Assert.Equal(expected, actual);
+        }
     }
 }
