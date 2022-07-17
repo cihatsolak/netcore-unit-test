@@ -1,4 +1,6 @@
-﻿namespace XUnitTest.App.Interfaces
+﻿using XUnitTest.App.Models;
+
+namespace XUnitTest.App.Interfaces
 {
     /// <summary>
     /// Araç servisi, DI
@@ -21,5 +23,11 @@
         /// <param name="fuel">Yakıt tipi</param>
         /// <returns>Taksit sayısı</returns>
         int CalculateInstallments(string model, int modelYear, string fuel);
+
+        /// <summary>
+        /// Trafik cezasını sorgular
+        /// </summary>
+        /// <returns></returns>
+        bool QuestionTheTrafficTicket(TrafficTicketDto trafficTicketDto);
     }
 }

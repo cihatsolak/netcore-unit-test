@@ -1,5 +1,6 @@
 ﻿using System;
 using XUnitTest.App.Interfaces;
+using XUnitTest.App.Models;
 
 namespace XUnitTest.App.Concretes
 {
@@ -42,6 +43,17 @@ namespace XUnitTest.App.Concretes
                 return 8;
             else
                 return 12;
+        }
+
+        public bool QuestionTheTrafficTicket(TrafficTicketDto trafficTicketDto)
+        {
+            if (string.IsNullOrWhiteSpace(trafficTicketDto.Plate))
+                return false;
+
+            if (0 >= trafficTicketDto.Age)
+                return false;
+
+            return true;
         }
     }
 }

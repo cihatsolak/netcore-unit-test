@@ -1,5 +1,7 @@
-﻿using Xunit;
+﻿using AutoFixture;
+using Xunit;
 using XUnitTest.App;
+using XUnitTest.App.Models;
 
 namespace XUnitTest.Test.App
 {
@@ -73,6 +75,13 @@ namespace XUnitTest.Test.App
 
             //Assert ->  Assert.Equal(beklenen değer, gerçek değer);
             Assert.Equal<int>(0, consumption);
+        }
+
+        [Fact]
+        public void QuestionTheTrafficTicket_SampleValues_ReturnTrue()
+        {
+            var fixture = new Fixture();
+            var trafficTicketDto = fixture.Create<TrafficTicketDto>();
         }
     }
 }
