@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using Xunit;
 using XUnitTest.App.Extensions;
 using XUnitTest.Test.Poco;
 
 namespace XUnitTest.Test.Extensions
 {
-    public class DateTimeExtensionsTest
+    public class DateTimeExtensionsTest : IClassFixture<DateTimeExtensionsTest>
     {
         [Fact]
         public void ToPrettyDate_ShouldArgumentNullException_WhenCultureIsNull()
@@ -20,7 +18,15 @@ namespace XUnitTest.Test.Extensions
             Assert.Equal(expected, actual);
         }
 
-        [Theory, ClassData(typeof(CultureTestTheoryData))]
+        [Theory, MemberData(nameof(SampleMemberData.StaticParameter), MemberType = typeof(SampleMemberData))]
+        public void ToPrettyDate_ShouldAssertTrue_WhenCultureIsItalian(CultureTestParameter parameter)
+        {
+            var actual = parameter.Actual.ToPrettyDate(parameter.Culture);
+            var expected = parameter.Expected;
+            Assert.Equal(expected, actual);
+        }
+
+        [Theory, ClassData(typeof(CultureTestClassData))]
         public void ToPrettyDate_ShouldAssertsTrue_WhenCultureIsDefined(CultureTestParameter parameter)
         {
             var actual = parameter.Actual.ToPrettyDate(parameter.Culture);

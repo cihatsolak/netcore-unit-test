@@ -4,9 +4,9 @@ using Xunit;
 
 namespace XUnitTest.Test.Poco
 {
-    public class CultureTestTheoryData : TheoryData<CultureTestParameter>
+    public class CultureTestClassData : TheoryData<CultureTestParameter>
     {
-        public CultureTestTheoryData()
+        public CultureTestClassData()
         {
             Add(new CultureTestParameter
             {
@@ -23,4 +23,6 @@ namespace XUnitTest.Test.Poco
             });
         }
     }
+
+
 }

@@ -6,7 +6,7 @@ namespace XUnitTest.Test.Poco
 {
     public static class SampleMemberData
     {
-        public static List<CultureTestParameter[]> StaticParameter => new List<CultureTestParameter[]>
+        public static IEnumerable<object[]> StaticParameter => new List<CultureTestParameter[]>
         {
             new CultureTestParameter[]
             {
