@@ -1,17 +1,20 @@
-﻿using Xunit;
+﻿using AutoFixture;
+using Xunit;
 using XUnitTest.App;
+using XUnitTest.App.Models;
 
 namespace XUnitTest.Test.App
 {
     /// <summary>
     /// Vehicle Test
     /// </summary>
-    public class VehicleTest
+    public class VehicleTest : IClassFixture<Vehicle>
     {
-        public Vehicle Vehicle { get; set; }
-        public VehicleTest()
+        public readonly Vehicle _vehicle;
+       
+        public VehicleTest(Vehicle vehicle)
         {
-            Vehicle = new Vehicle();
+            _vehicle = vehicle;
         }
 
         [Fact]
@@ -22,7 +25,7 @@ namespace XUnitTest.Test.App
             int fuelPrice = 20;
 
             //Act Evresi
-            int consumption = Vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
+            int consumption = _vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
 
             //Assert ->  Assert.Equal(beklenen değer, gerçek değer);
             Assert.Equal(20, consumption);
@@ -36,7 +39,7 @@ namespace XUnitTest.Test.App
             //constructor'da  tanımlandı
 
             //Act Evresi
-            int consumption = Vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
+            int consumption = _vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
 
             //Assert ->  Assert.Equal(beklenen değer, gerçek değer);
             Assert.Equal<int>(20, consumption);
@@ -52,7 +55,7 @@ namespace XUnitTest.Test.App
             //constructor'da  tanımlandı
 
             //Act Evresi
-            int consumption = Vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
+            int consumption = _vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
 
             //Assert ->  Assert.Equal(beklenen değer, gerçek değer);
             Assert.Equal<int>(20, consumption);
@@ -69,10 +72,17 @@ namespace XUnitTest.Test.App
             //constructor'da  tanımlandı
 
             //Act Evresi
-            int consumption = Vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
+            int consumption = _vehicle.CalculateConsumptionByDistance(distance, fuelPrice);
 
             //Assert ->  Assert.Equal(beklenen değer, gerçek değer);
             Assert.Equal<int>(0, consumption);
+        }
+
+        [Fact]
+        public void QuestionTheTrafficTicket_SampleValues_ReturnTrue()
+        {
+            var fixture = new Fixture();
+            var trafficTicketDto = fixture.Create<TrafficTicketDto>();
         }
     }
 }
