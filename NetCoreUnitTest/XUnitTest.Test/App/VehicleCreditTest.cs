@@ -1,5 +1,6 @@
 ﻿using Moq;
 using System;
+using System.Threading;
 using Xunit;
 using XUnitTest.App;
 using XUnitTest.App.Interfaces;
@@ -13,7 +14,7 @@ namespace XUnitTest.Test.App
     {
         //VehicleCredit class'ının içerisindeli ICreditService interface'ini taklit ediyorum.
         public Mock<ICreditService> CreditServiceMock { get; set; }
-        //Ana class
+        
         public VehicleCredit VehicleCredit { get; set; }
 
         public VehicleCreditTest()
